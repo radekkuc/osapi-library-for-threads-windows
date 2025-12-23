@@ -14,6 +14,8 @@ class Thread : public ThreadInterface {
     int priority;
     unsigned int stackSize;
     Joinable isJoinable;
+    HANDLE handle;
+    ThreadState state;
 
     void trampoline(void* arg) {
 
@@ -26,7 +28,9 @@ class Thread : public ThreadInterface {
          *  @param[in] isJoinable decides if the thread supports join operation or not
          *  @param[in] name optional thread name
          */
-        Thread(int priority, unsigned int stackSize, Joinable isJoinable, const char* name = "unnamed") : name(name) {
+        Thread(int priority, unsigned int stackSize, Joinable isJoinable, const char* name = "unnamed") :   
+        name(name), handle(nullptr), {
+            
             
         }
         
@@ -40,8 +44,13 @@ class Thread : public ThreadInterface {
          *  @retval false if the thread was not started successfully, or the thread was already running
          */
         virtual bool run() {
-            // if handle exists
-            if(CreateThread() != NULL) {
+            if(handle != nullptr) {
+                return false;
+            }
+
+            handle = CreateThread();
+            if(handle) {
+                state = RUNNING;
                 return true;
             }
             return false;
