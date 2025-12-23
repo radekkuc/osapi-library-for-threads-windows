@@ -12,6 +12,7 @@ class Thread : public ThreadInterface {
     private:
     const char* name;
     int priority;
+    unsigned int stackSize;
     Joinable isJoinable;
 
     void trampoline(void* arg) {
@@ -39,8 +40,11 @@ class Thread : public ThreadInterface {
          *  @retval false if the thread was not started successfully, or the thread was already running
          */
         virtual bool run() {
-            
-
+            // if handle exists
+            if(CreateThread() != NULL) {
+                return true;
+            }
+            return false;
         }
         
         /** Checks if the thread is running.
