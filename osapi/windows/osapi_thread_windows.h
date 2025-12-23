@@ -26,12 +26,12 @@ class Thread : public ThreadInterface {
          *  @param[in] name optional thread name
          */
         Thread(int priority, unsigned int stackSize, Joinable isJoinable, const char* name = "unnamed") : name(name) {
-            // TODO
+            
         }
         
         /** Virtual destructor required to properly destroy derived class objects. */
         virtual ~Thread() { 
-            // TODO
+            
         }
         
         /** Runs the thread.
