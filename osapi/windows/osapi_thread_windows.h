@@ -22,33 +22,21 @@ class Thread : public ThreadInterface {
         if(thread) {
             thread->job();
         }
-        thread->state = READY;
+        thread->state = INACTIVE;
         return 0;
     }
 
     public:
-
-        /** Thread constructor.
-         *  @param[in] priority thread priority
-         *  @param[in] stackSize thread stack size in bytes
-         *  @param[in] isJoinable decides if the thread supports join operation or not
-         *  @param[in] name optional thread name
-         */
         Thread(int priority, unsigned int stackSize, Joinable joinable, const char* name = "unnamed") :   
-        name(name), handle(nullptr) {
+        name(name), priority(priority), stackSize(stackSize), joinable(joinable), handle(nullptr)  {
             
             
         }
         
-        /** Virtual destructor required to properly destroy derived class objects. */
         virtual ~Thread() { 
             
         }
-        
-        /** Runs the thread.
-         *  @retval true if the thread was started successfully,
-         *  @retval false if the thread was not started successfully, or the thread was already running
-         */
+
         virtual bool run() {
             if(handle != nullptr) {
                 return false;
@@ -67,8 +55,7 @@ class Thread : public ThreadInterface {
          *  @retval false if the thread is not running
          */
         virtual bool isRunning() {
-            // TODO
-            return false;
+            return state == RUNNING;
         }
 
         /** Waits for the thread to finish executing, with a given timeout.
@@ -77,7 +64,12 @@ class Thread : public ThreadInterface {
          *  @retval false if the thread was not joined within the given time or the thread is not joinable at all
          */
         virtual bool join(unsigned int timeout) {
-            // TODO
+            if(joinable == JOINABLE) {
+                if(WaitForSingleObject(handle, timeout) == WAIT_OBJECT_0) {
+                    state = INACTIVE;
+                    return true;
+                }
+            }
             return false;
         }
 
@@ -86,8 +78,7 @@ class Thread : public ThreadInterface {
          *  @retval false if the thread is not joinable
          */
         virtual bool isJoinable() {
-            // TODO
-            return false;
+            return joinable == JOINABLE;
         }
 
         /** Suspends thread execution.

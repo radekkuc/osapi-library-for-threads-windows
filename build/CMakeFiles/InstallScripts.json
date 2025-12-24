@@ -1,9 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"C:/Users/Radek/Desktop/osfesWin/build/cmake_install.cmake",
-		"C:/Users/Radek/Desktop/osfesWin/build/cunit/cmake_install.cmake",
-		"C:/Users/Radek/Desktop/osfesWin/build/osapi/cmake_install.cmake"
-	],
-	"Parallel" : false
-}
