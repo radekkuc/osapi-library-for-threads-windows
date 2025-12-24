@@ -13,13 +13,19 @@ class Thread : public ThreadInterface {
     const char* name;
     int priority;
     unsigned int stackSize;
-    Joinable isJoinable;
+    Joinable joinable;
     HANDLE handle;
     ThreadState state;
 
-    void trampoline(void* arg) {
-
+    static DWORD entry_function(void* arg) {
+        Thread* thread = static_cast<Thread*>(arg);
+        if(thread) {
+            thread->job();
+        }
+        thread->state = READY;
+        return 0;
     }
+
     public:
 
         /** Thread constructor.
@@ -28,8 +34,8 @@ class Thread : public ThreadInterface {
          *  @param[in] isJoinable decides if the thread supports join operation or not
          *  @param[in] name optional thread name
          */
-        Thread(int priority, unsigned int stackSize, Joinable isJoinable, const char* name = "unnamed") :   
-        name(name), handle(nullptr), {
+        Thread(int priority, unsigned int stackSize, Joinable joinable, const char* name = "unnamed") :   
+        name(name), handle(nullptr) {
             
             
         }
@@ -48,7 +54,7 @@ class Thread : public ThreadInterface {
                 return false;
             }
 
-            handle = CreateThread();
+            handle = CreateThread(nullptr, stackSize, Thread::entry_function, this, 0, nullptr);
             if(handle) {
                 state = RUNNING;
                 return true;

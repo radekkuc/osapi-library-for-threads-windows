@@ -2,16 +2,7 @@
 <testsuites errors="0" failures="0" tests="0" name="myproject_windows.exe-Results.xml"> 
   <testsuite errors="0" failures="0" tests="15" name="osapi"> 
         <testcase classname="CUnit.osapi" name="TEST_ThreadName" time="0"/>
-        <testcase classname="CUnit.osapi" name="TEST_ThreadCreation" time="0">
-            <failure message="true == t.run()" type="Failure">
-                     Condition: true == t.run()
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_01_thread_creation.cpp
-                     Line     : 26
-                     Condition: 1 == testFlag
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_01_thread_creation.cpp
-                     Line     : 30
-            </failure>
-        </testcase>
+        <testcase classname="CUnit.osapi" name="TEST_ThreadCreation" time="0"/>
         <testcase classname="CUnit.osapi" name="TEST_ThreadJoin" time="0">
             <failure message="true == t.isRunning()" type="Failure">
                      Condition: true == t.isRunning()
@@ -20,237 +11,25 @@
                      Condition: true == t.isJoinable()
                      File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_02_thread_join.cpp
                      Line     : 38
-                     Condition: 1 == testFlag
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_02_thread_join.cpp
-                     Line     : 41
                      Condition: true == t.join(5000)
                      File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_02_thread_join.cpp
                      Line     : 45
-                     Condition: 3 == testFlag
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_02_thread_join.cpp
-                     Line     : 47
             </failure>
         </testcase>
         <testcase classname="CUnit.osapi" name="TEST_ThreadSuspendResume" time="0">
-            <failure message="1 == testFlag" type="Failure">
-                     Condition: 1 == testFlag
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_03_thread_suspend_resume.cpp
-                     Line     : 34
+            <failure message="true == t.suspend()" type="Failure">
                      Condition: true == t.suspend()
                      File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_03_thread_suspend_resume.cpp
                      Line     : 36
+                     Condition: 0 == testFlag
+                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_03_thread_suspend_resume.cpp
+                     Line     : 40
                      Condition: true == t.resume()
                      File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_03_thread_suspend_resume.cpp
                      Line     : 42
-                     Condition: 1 == testFlag
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_03_thread_suspend_resume.cpp
-                     Line     : 45
                      Condition: true == t.join(1000)
                      File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_03_thread_suspend_resume.cpp
                      Line     : 49
-                     Condition: 2 == testFlag
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_03_thread_suspend_resume.cpp
-                     Line     : 51
             </failure>
         </testcase>
-        <testcase classname="CUnit.osapi" name="TEST_ThreadSleep" time="0">
-            <failure message="true == t.run()" type="Failure">
-                     Condition: true == t.run()
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_04_thread_delay.cpp
-                     Line     : 25
-                     Condition: stop - start &gt; 2900
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_04_thread_delay.cpp
-                     Line     : 31
-            </failure>
-        </testcase>
-        <testcase classname="CUnit.osapi" name="TEST_ThreadPriority" time="0">
-            <failure message="true == t.run()" type="Failure">
-                     Condition: true == t.run()
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_05_thread_priority.cpp
-                     Line     : 28
-                     Condition: true == t.setPriority(1)
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_05_thread_priority.cpp
-                     Line     : 32
-                     Condition: 1 == t.getPriority()
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_05_thread_priority.cpp
-                     Line     : 33
-            </failure>
-        </testcase>
-        <testcase classname="CUnit.osapi" name="TEST_ThreadPriorityChange" time="0">
-            <failure message="0 == osapiInitialPriorityA" type="Failure">
-                     Condition: 0 == osapiInitialPriorityA
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_06_thread_priority_change.cpp
-                     Line     : 65
-                     Condition: 1 == osapiInitialPriorityB
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_06_thread_priority_change.cpp
-                     Line     : 66
-                     Condition: 1 == tA.getPriority()
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_06_thread_priority_change.cpp
-                     Line     : 67
-                     Condition: 1 == priorityDifferenceA
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_06_thread_priority_change.cpp
-                     Line     : 69
-                     Condition: -1 == priorityDifferenceB
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_06_thread_priority_change.cpp
-                     Line     : 70
-                     Condition: true == tA.join(100)
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_06_thread_priority_change.cpp
-                     Line     : 72
-                     Condition: true == tB.join(100)
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_06_thread_priority_change.cpp
-                     Line     : 73
-            </failure>
-        </testcase>
-        <testcase classname="CUnit.osapi" name="TEST_ThreadRunDetailed" time="0">
-            <failure message="true == t.run()" type="Failure">
-                     Condition: true == t.run()
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_07_thread_run_detailed.cpp
-                     Line     : 62
-                     Condition: taskCount+1 == GetCurrentThreadCount()
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_07_thread_run_detailed.cpp
-                     Line     : 64
-                     Condition: 1 == testFlag
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_07_thread_run_detailed.cpp
-                     Line     : 70
-                     Condition: true == t.join(100)
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_07_thread_run_detailed.cpp
-                     Line     : 72
-            </failure>
-        </testcase>
-        <testcase classname="CUnit.osapi" name="TEST_ThreadStateChecking" time="0">
-            <failure message="osapi::INACTIVE == t.getState()" type="Failure">
-                     Condition: osapi::INACTIVE == t.getState()
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_08_thread_state.cpp
-                     Line     : 31
-                     Condition: true == t.run()
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_08_thread_state.cpp
-                     Line     : 33
-                     Condition: osapi::RUNNING == runState
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_08_thread_state.cpp
-                     Line     : 37
-                     Condition: (osapi::READY == state) || (osapi::RUNNING == state)
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_08_thread_state.cpp
-                     Line     : 40
-                     Condition: true == t.suspend()
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_08_thread_state.cpp
-                     Line     : 42
-                     Condition: osapi::SUSPENDED == t.getState()
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_08_thread_state.cpp
-                     Line     : 44
-                     Condition: true == t.resume()
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_08_thread_state.cpp
-                     Line     : 46
-                     Condition: (osapi::READY == state) || (osapi::RUNNING == state)
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_08_thread_state.cpp
-                     Line     : 51
-                     Condition: osapi::BLOCKED == t.getState()
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_08_thread_state.cpp
-                     Line     : 58
-                     Condition: true == t.join(200)
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_08_thread_state.cpp
-                     Line     : 60
-                     Condition: osapi::INACTIVE == t.getState()
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_08_thread_state.cpp
-                     Line     : 62
-            </failure>
-        </testcase>
-        <testcase classname="CUnit.osapi" name="TEST_ThreadSuspendInactive" time="0">
-            <failure message="osapi::INACTIVE == t.getState()" type="Failure">
-                     Condition: osapi::INACTIVE == t.getState()
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_09_thread_suspend_inactive.cpp
-                     Line     : 21
-            </failure>
-        </testcase>
-        <testcase classname="CUnit.osapi" name="TEST_ThreadStackSize" time="0">
-            <failure message="true == t.run()" type="Failure">
-                     Condition: true == t.run()
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_10_thread_stack_size.cpp
-                     Line     : 32
-                     Condition: 40000 &lt; t.getTotalStackSize()
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_10_thread_stack_size.cpp
-                     Line     : 36
-                     Condition: 40000 &lt; t.getUsedStackSize()
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_10_thread_stack_size.cpp
-                     Line     : 37
-                     Condition: true == t.join(200)
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_10_thread_stack_size.cpp
-                     Line     : 42
-            </failure>
-        </testcase>
-        <testcase classname="CUnit.osapi" name="TEST_Mutex" time="0">
-            <failure message="true == m.lock(100)" type="Failure">
-                     Condition: true == m.lock(100)
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_20_mutex.cpp
-                     Line     : 13
-                     Condition: true == m.lock(100)
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_20_mutex.cpp
-                     Line     : 13
-                     Condition: true == m.lock(100)
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_20_mutex.cpp
-                     Line     : 13
-            </failure>
-        </testcase>
-        <testcase classname="CUnit.osapi" name="TEST_RecursiveMutex" time="0">
-            <failure message="true == m.lock(100)" type="Failure">
-                     Condition: true == m.lock(100)
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_21_recursive_mutex.cpp
-                     Line     : 13
-                     Condition: true == m.lock(100)
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_21_recursive_mutex.cpp
-                     Line     : 15
-                     Condition: true == m.lock(100)
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_21_recursive_mutex.cpp
-                     Line     : 17
-                     Condition: true == m.lock(100)
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_21_recursive_mutex.cpp
-                     Line     : 13
-                     Condition: true == m.lock(100)
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_21_recursive_mutex.cpp
-                     Line     : 15
-                     Condition: true == m.lock(100)
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_21_recursive_mutex.cpp
-                     Line     : 17
-                     Condition: true == m.lock(100)
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_21_recursive_mutex.cpp
-                     Line     : 13
-                     Condition: true == m.lock(100)
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_21_recursive_mutex.cpp
-                     Line     : 15
-                     Condition: true == m.lock(100)
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_21_recursive_mutex.cpp
-                     Line     : 17
-            </failure>
-        </testcase>
-        <testcase classname="CUnit.osapi" name="TEST_MutexDetailed" time="0">
-            <failure message="true == m.lock(100)" type="Failure">
-                     Condition: true == m.lock(100)
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_22_mutex_detailed.cpp
-                     Line     : 24
-                     Condition: true == t.join(500)
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_22_mutex_detailed.cpp
-                     Line     : 31
-                     Condition: true == mutexTaken
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_22_mutex_detailed.cpp
-                     Line     : 33
-            </failure>
-        </testcase>
-        <testcase classname="CUnit.osapi" name="TEST_MortalThread" time="0">
-            <failure message="true == t.run()" type="Failure">
-                     Condition: true == t.run()
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_30_mortal_thread.cpp
-                     Line     : 42
-                     Condition: 1 == testFlagBegin
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_30_mortal_thread.cpp
-                     Line     : 46
-                     Condition: 1 == testFlagLoop
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_30_mortal_thread.cpp
-                     Line     : 47
-                     Condition: true == t.join(1000)
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_30_mortal_thread.cpp
-                     Line     : 52
-                     Condition: 1 == testFlagEnd
-                     File     : C:/Users/Radek/Desktop/osfesWin/osapi_test/test_30_mortal_thread.cpp
-                     Line     : 54
-            </failure>
-        </testcase>
-</testsuite></testsuites>
+        <testcase classname="CUnit.osapi" name="TEST_Th
