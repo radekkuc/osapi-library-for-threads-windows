@@ -23,6 +23,7 @@ class Thread : public ThreadInterface {
             thread->job();
         }
         thread->state = INACTIVE;
+
         return 0;
     }
 
@@ -35,12 +36,14 @@ class Thread : public ThreadInterface {
         
         virtual ~Thread() { 
             if(handle) {
-                if(joinable != JOINABLE) {
+                // joinable means that we can wait for this thread, if something is not joinable then we do not have permission
+                // for waiting even if thread is in FINISHED state
+                if(joinable == JOINABLE) {
                     WaitForSingleObject(handle, INFINITE);
                 }
-                
+                CloseHandle(handle);
                 handle = nullptr;
-                CloseHandle;
+                
             }
         }
 
@@ -52,26 +55,19 @@ class Thread : public ThreadInterface {
             handle = CreateThread(nullptr, stackSize, Thread::entry_function, this, 0, nullptr);
             if(handle) {
                 state = RUNNING;
+                SetThreadPriority(handle, priority);
                 return true;
             }
             return false;
         }
         
-        /** Checks if the thread is running.
-         *  @retval true if the thread is running
-         *  @retval false if the thread is not running
-         */
         virtual bool isRunning() {
+            if(!handle) return false;
             return state == RUNNING;
         }
 
-        /** Waits for the thread to finish executing, with a given timeout.
-         *  @param timeout[in] number of milliseconds to wait for the thread to finish executing
-         *  @retval true if the thread was successfully joined in the given time
-         *  @retval false if the thread was not joined within the given time or the thread is not joinable at all
-         */
         virtual bool join(unsigned int timeout) {
-            if(joinable == JOINABLE) {
+            if(joinable == JOINABLE && handle) {
                 if(WaitForSingleObject(handle, timeout) == WAIT_OBJECT_0) {
                     state = INACTIVE;
                     return true;
@@ -80,53 +76,39 @@ class Thread : public ThreadInterface {
             return false;
         }
 
-        /** Checks, if the thread is joinable.
-         *  @retval true if the thread is joinable
-         *  @retval false if the thread is not joinable
-         */
         virtual bool isJoinable() {
+            if(!handle) return false;
             return joinable == JOINABLE;
         }
 
-        /** Suspends thread execution.
-         *  @retval true if the thread was suspended successfully
-         *  @retval false if the thread was not suspended for some reason
-         */
         virtual bool suspend() {
-            // TODO
+            if(state != SUSPENDED && handle) {
+                if(SuspendThread(handle) == ((DWORD) - 1)) return false;
+                state = SUSPENDED;
+                return true;
+            }
             return false;
         }
 
-        /** Resumes thread execution.
-         *  @retval true if the thread was resumed successfully
-         *  @retval false if the thread was not resumed for some reason
-         */
         virtual bool resume() {
-            // TODO
+            if(state == SUSPENDED && handle) {
+                if(ResumeThread(handle) == (DWORD) - 1) return false;
+                state = RUNNING;
+                return true; 
+            }
             return false;
         }
 
-        /** Sets thread priority
-         *  @param[in] priority new thread priority
-         *  @retval true if the priority for the thread was set successfully
-         *  @retval false if the priority for the thread was not set successfully for some reason
-         */
         virtual bool setPriority(int priority) {
-            // TODO
-            return false;
+            this->priority = priority;
+            SetThreadPriority(handle, priority);
+            return true;
         }
 
-        /** Gets the thread priority
-         *  @return current thread priority
-         */
         virtual int getPriority() {
-            // TODO
-            return 0;
+            return priority;
         }
         
-        /** Gets thread name
-         *  @return name of the thread
-         */
         virtual const char* getName() {
             return name;
         }
@@ -156,12 +138,9 @@ class Thread : public ThreadInterface {
         }
 
     protected:
-
-        /** Delays thread execution for a given time.
-         *  @param time[in] number of milliseconds to delay thread execution
-         */
         virtual void sleep(unsigned int time) {
-            // TODO
+            // Consider setting BLOCKED state 
+            Sleep(time);
         }
 };
 
