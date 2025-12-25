@@ -34,7 +34,14 @@ class Thread : public ThreadInterface {
         }
         
         virtual ~Thread() { 
-            
+            if(handle) {
+                if(joinable != JOINABLE) {
+                    WaitForSingleObject(handle, INFINITE);
+                }
+                
+                handle = nullptr;
+                CloseHandle;
+            }
         }
 
         virtual bool run() {
