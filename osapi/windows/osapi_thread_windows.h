@@ -19,7 +19,9 @@ class Thread : public ThreadInterface {
 
     static DWORD entry_function(void* arg) {
         Thread* thread = static_cast<Thread*>(arg);
+        thread->state = INACTIVE;
         if(thread) {
+            thread->state = RUNNING;
             thread->job();
         }
         thread->state = INACTIVE;
@@ -29,7 +31,7 @@ class Thread : public ThreadInterface {
 
     public:
         Thread(int priority, unsigned int stackSize, Joinable joinable, const char* name = "unnamed") :   
-        name(name), priority(priority), stackSize(stackSize), joinable(joinable), handle(nullptr)  {
+        name(name), priority(priority), stackSize(stackSize), joinable(joinable), handle(nullptr), state(INACTIVE)  {
             
             
         }
@@ -117,9 +119,15 @@ class Thread : public ThreadInterface {
          *  @return current state of the thread
          */
         virtual ThreadState getState() {
-            // TODO
-            return UNKNOWN;
+            return state;
         }
+
+    // UNKNOWN = 0,
+    // INACTIVE = 1,
+    // READY = 2,
+    // RUNNING = 3,
+    // BLOCKED = 4,
+    // SUSPENDED = 5
 
         /** Gets the total size of the stack assigned for this thread
          *  @return total stack size in number of bytes
@@ -140,6 +148,7 @@ class Thread : public ThreadInterface {
     protected:
         virtual void sleep(unsigned int time) {
             // Consider setting BLOCKED state 
+            state = BLOCKED;
             Sleep(time);
         }
 };

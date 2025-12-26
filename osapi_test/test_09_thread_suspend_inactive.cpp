@@ -20,7 +20,7 @@ void TEST_ThreadSuspendInactive(void) {
     // check that the thread is in INACTIVE state
     CU_ASSERT(osapi::INACTIVE == t.getState());
 
-    // at this point it sould be impossible to suspend the thread
+    // at this point it should be impossible to suspend the thread
     CU_ASSERT(false == t.suspend());
     // nor resume it
     CU_ASSERT(false == t.resume());
