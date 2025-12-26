@@ -13,6 +13,7 @@ class Thread : public ThreadInterface {
     const char* name;
     int priority;
     unsigned int stackSize;
+    unsigned int usedStack;
     Joinable joinable;
     HANDLE handle;
     ThreadState state;
@@ -22,6 +23,8 @@ class Thread : public ThreadInterface {
         thread->state = INACTIVE;
         if(thread) {
             thread->state = RUNNING;
+            // Assume worst case scenario
+            thread->usedStack = thread->stackSize;
             thread->job();
         }
         thread->state = INACTIVE;
@@ -31,10 +34,7 @@ class Thread : public ThreadInterface {
 
     public:
         Thread(int priority, unsigned int stackSize, Joinable joinable, const char* name = "unnamed") :   
-        name(name), priority(priority), stackSize(stackSize), joinable(joinable), handle(nullptr), state(INACTIVE)  {
-            
-            
-        }
+        name(name), priority(priority), stackSize(stackSize), joinable(joinable), handle(nullptr), state(INACTIVE), usedStack(stackSize)  {}
         
         virtual ~Thread() { 
             if(handle) {
@@ -55,6 +55,10 @@ class Thread : public ThreadInterface {
             }
 
             handle = CreateThread(nullptr, stackSize, Thread::entry_function, this, 0, nullptr);
+            if(stackSize == 0) {
+                this->stackSize = 1024 * 1024;
+            } 
+
             if(handle) {
                 state = RUNNING;
                 SetThreadPriority(handle, priority);
@@ -115,34 +119,15 @@ class Thread : public ThreadInterface {
             return name;
         }
 
-        /** Gets the current state of the thread
-         *  @return current state of the thread
-         */
         virtual ThreadState getState() {
             return state;
         }
-
-    // UNKNOWN = 0,
-    // INACTIVE = 1,
-    // READY = 2,
-    // RUNNING = 3,
-    // BLOCKED = 4,
-    // SUSPENDED = 5
-
-        /** Gets the total size of the stack assigned for this thread
-         *  @return total stack size in number of bytes
-         */
         virtual unsigned int getTotalStackSize() {
-            // TODO
-            return 0;
+            return stackSize;
         }
 
-        /** Gets the size of the used stack for this thread
-         *  @return number of bytes used on the stack
-         */
         virtual unsigned int getUsedStackSize() {
-            // TODO
-            return 0;
+            return usedStack;
         }
 
     protected:
