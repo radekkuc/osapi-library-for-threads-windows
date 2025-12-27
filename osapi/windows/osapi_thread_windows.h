@@ -135,6 +135,7 @@ class Thread : public ThreadInterface {
             // Consider setting BLOCKED state 
             state = BLOCKED;
             Sleep(time);
+            state = RUNNING;
         }
 };
 

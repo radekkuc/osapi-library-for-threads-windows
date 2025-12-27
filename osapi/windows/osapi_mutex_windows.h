@@ -3,21 +3,23 @@
 
 namespace osapi {
 
-class Mutex : public MutexInterface
-{
+class Mutex : public MutexInterface {
+private:
+    HANDLE mutexH;
 public:
     Mutex() {
-        // TODO
+        mutexH = CreateMutex(0, false, 0);
     }
     virtual ~Mutex() {
-        // TODO
+        CloseHandle(mutexH);
     }
     virtual bool lock(unsigned int timeout) {
-        // TODO
-        return false;
+        if(!mutexH) return false;
+        WaitForSingleObject(mutexH, timeout);
+
     }
     virtual void unlock() {
-        // TODO
+        ReleaseMutex(mutexH);
     }
 };
 
