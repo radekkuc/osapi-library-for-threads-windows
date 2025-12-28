@@ -11,6 +11,7 @@ private:
 public:
     Mutex() {
         mutexH = CreateMutex(0, false, 0);
+        id = 0;
     }
 
     virtual ~Mutex() {
@@ -18,10 +19,11 @@ public:
     }
 
     virtual bool lock(unsigned int timeout) {
-        id = GetCurrentThreadId();
-        if(!mutexH || locked) return false;
+        if(!mutexH) return false;
+        if(locked && (GetCurrentThreadId() == id)) return false;
         if(WaitForSingleObject(mutexH, timeout) == WAIT_OBJECT_0) {
             locked = true;
+            id = GetCurrentThreadId();
             return true;
         } 
         return false;
