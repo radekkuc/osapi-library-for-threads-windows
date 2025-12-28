@@ -3,21 +3,26 @@
 
 namespace osapi {
 
-class RecursiveMutex : public MutexInterface
-{
+class RecursiveMutex : public MutexInterface {
+private:
+    HANDLE mutexH;
 public:
     RecursiveMutex() {
-        // TODO
+        mutexH = CreateMutex(0, false, 0);
     }
     virtual ~RecursiveMutex() {
-        // TODO
+        CloseHandle(mutexH);
     }
     virtual bool lock(unsigned int timeout) {
-        // TODO
+        if(!mutexH) return false;
+        if(WaitForSingleObject(mutexH, timeout) == WAIT_OBJECT_0) {
+            return true;
+        }
         return false;
     }
     virtual void unlock() {
-        // TODO
+        if(!mutexH) return;
+        ReleaseMutex(mutexH);
     }
 };
 
